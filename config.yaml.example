@@ -1,0 +1,187 @@
+# プロンプト変換処理の設定ファイル
+# このファイルは、web_chat配下のプロンプトテンプレートを
+# 変数を置き換えた実行可能なプロンプトに変換する処理を制御します。
+
+# ソースディレクトリのベースパス（プロジェクトルートからの相対パス）
+source_base_path: "web_chat"
+
+# デスティネーションディレクトリのベースパス（プロジェクトルートからの相対パス）
+destination_base_path: "ja"
+
+# 処理対象のサブディレクトリ（空の場合は全てのサブディレクトリを処理）
+target_directories:
+  - "general_prompts"
+
+# 処理オプション
+options:
+  # サブディレクトリを再帰的に処理するか
+  recursive: true
+  
+  # 既存ファイルを上書きするか
+  overwrite: true
+  
+  # 処理対象ファイルの拡張子
+  file_extension: ".md"
+  
+  # 除外するファイル名パターン（正規表現）
+  exclude_patterns:
+    - "^README\\.md$"
+  
+  # 処理状況を詳細に表示するか
+  verbose: true
+
+# 今後の拡張用設定（現在は未使用）
+future_extensions:
+  # 複数言語への変換サポート
+  multi_language_support:
+    enabled: false
+    target_languages:
+      - "en"
+      - "ja"
+  
+  # カスタム変換ルール
+  custom_rules:
+    enabled: false
+    rules: []
+      
+      # 変数セクションが見つからない場合の動作
+      # - skip: スキップする
+      # - error: エラーを出力する
+      # - copy: そのままコピーする
+      missing_variables_action: "skip"
+      
+      # プロンプトテンプレートセクションが見つからない場合の動作
+      missing_template_action: "skip"
+
+  # 専門プロンプト（専門分野別のプロンプト）の変換（将来の拡張用）
+  - name: "specialized_prompts"
+    description: "専門分野別のプロンプトテンプレートの変換"
+    enabled: false
+    source_path: "specialized_prompts"
+    destination_path: "specialized_prompts"
+    options:
+      recursive: true
+      include_patterns:
+        - ".*\\.md$"
+      exclude_patterns:
+        - "README\\.md$"
+      missing_variables_action: "skip"
+      missing_template_action: "skip"
+
+# セクション抽出の設定
+# マークダウンファイルから特定のセクションを抽出する方法を定義
+sections:
+  # プロンプトテンプレートセクション
+  prompt_template:
+    # セクションの開始タグ（XMLタグ形式）
+    start_tag: "<prompt_template>"
+    end_tag: "</prompt_template>"
+    
+    # 抽出後の処理
+    # - preserve: タグを保持したまま抽出
+    # - strip: タグを削除して内容のみ抽出
+    tag_handling: "strip"
+    
+    # 必須セクションか
+    required: true
+  
+  # 変数定義セクション
+  variables:
+    start_tag: "<variables>"
+    end_tag: "</variables>"
+    tag_handling: "strip"
+    required: true
+    
+    # 変数セクション内のコードブロック形式
+    code_block:
+      # コードブロックの言語指定
+      language: "yaml"
+      
+      # コードブロックのフェンス形式
+      fence: "```"
+
+# 出力ファイルの形式設定
+output:
+  # フロントマターの形式
+  frontmatter:
+    # フロントマターを出力するか
+    enabled: true
+    
+    # フロントマターに含める追加情報
+    include_metadata:
+      # 元のソースファイルのパスを記録するか
+      source_file: true
+      
+      # 変換日時を記録するか
+      generated_at: true
+      
+      # 設定ファイルのバージョンを記録するか
+      config_version: true
+  
+  # 本文（変数置換後のプロンプト）の設定
+  body:
+    # 本文の前に空行を挿入する数
+    blank_lines_before: 1
+    
+    # 見出しレベルの調整（0=調整なし、1=すべての見出しを1レベル下げる）
+    heading_level_adjustment: 0
+
+# ログとエラーハンドリング
+logging:
+  # ログレベル: DEBUG, INFO, WARNING, ERROR
+  level: "INFO"
+  
+  # ログ出力先
+  # - console: コンソールに出力
+  # - file: ファイルに出力
+  # - both: 両方に出力
+  output: "console"
+  
+  # ログファイルのパス（outputがfileまたはbothの場合）
+  log_file: "logs/prompt_conversion.log"
+
+# 変換処理の詳細設定
+processing:
+  # 既存のデスティネーションファイルを上書きするか
+  overwrite_existing: true
+  
+  # ドライラン（実際にファイルを作成せず、処理内容のみ表示）
+  dry_run: false
+  
+  # 並列処理の設定
+  parallel:
+    # 並列処理を有効にするか
+    enabled: false
+    
+    # 最大ワーカー数（0=CPUコア数に基づく自動設定）
+    max_workers: 0
+  
+  # バックアップの設定
+  backup:
+    # 上書き前にバックアップを作成するか
+    enabled: false
+    
+    # バックアップファイルの拡張子
+    extension: ".bak"
+
+# 検証ルール
+validation:
+  # 変換前の検証を実行するか
+  enabled: true
+  
+  # 検証ルール
+  rules:
+    # すべての変数がvariablesセクションに定義されているか確認
+    - name: "all_variables_defined"
+      enabled: true
+      severity: "error"  # error, warning, info
+    
+    # exampleが空でないことを確認
+    - name: "examples_not_empty"
+      enabled: true
+      severity: "warning"
+    
+    # YAMLの構文が正しいことを確認
+    - name: "valid_yaml_syntax"
+      enabled: true
+      severity: "error"

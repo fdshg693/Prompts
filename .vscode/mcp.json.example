@@ -1,0 +1,14 @@
+{
+    "servers": {
+        "tavily": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "tavily-mcp@latest"
+            ],
+            "env": {
+                "TAVILY_API_KEY": "<your-api-key>"
+            }
+        }
+    }
+}

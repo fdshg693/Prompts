@@ -1,0 +1,21 @@
+// 適切な場所に配置してください
+{
+  "mcpServers": {
+    "tavily_mcp": {
+      "type": "local",
+      "command": "npx.cmd",
+      "tools": [
+        "*"
+      ],
+      "args": [
+        "-y",
+        "tavily-mcp@latest"
+      ],
+      // 注意点：少なくとも、Windows環境においては、envにて直接値を記入しても認識されないよう 2025/12/09
+      // そのため、環境変数経由で渡す必要がありそう
+      "env": {
+        "TAVILY_API_KEY": "${TAVILY_API_KEY}"
+      }
+    }
+  }
+}

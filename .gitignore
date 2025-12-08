@@ -1,0 +1,13 @@
+# MCP関連
+.vscode/mcp.json
+ai_coder/github_copilot/CLI/mcp-config.json
+
+# 作業用エージェント（テンプレートはGIT管理）
+.github/agents
+
+# 便利スクリプト（WIP）
+scripts/
+config.yaml
+
+# 一時出力ディレクトリ
+temp/
