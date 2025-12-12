@@ -78,7 +78,7 @@ tools: ['execute/getTerminalOutput', 'execute/runInTerminal', 'read/problems', '
 
 <step_1>
     判断：最新のJWT実装のベストプラクティスを確認する必要があります
-    #tool:fetch "JWT authentication best practices 2024"
+    #tool:web/fetch "JWT authentication best practices 2024"
     取得結果：ES256アルゴリズムの使用とリフレッシュトークンの実装が推奨されています
 </step_1>
 

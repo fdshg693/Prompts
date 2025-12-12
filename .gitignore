@@ -11,3 +11,6 @@ config.yaml
 
 # 一時出力ディレクトリ
 temp/
+
+# テスト用一時ディレクトリ
+temp_test/
