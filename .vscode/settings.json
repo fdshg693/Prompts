@@ -1,0 +1,5 @@
+{
+    "github.copilot.chat.cli.customAgents.enabled": true,
+    "chat.customAgentInSubagent.enabled": true,
+    "chat.useClaudeSkills": true
+}
