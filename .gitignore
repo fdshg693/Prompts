@@ -2,15 +2,15 @@
 .vscode/mcp.json
 ai_coder/github_copilot/CLI/mcp-config.json
 
-# 作業用エージェント（テンプレートはGIT管理）
+# 作業用エージェント（テンプレートのみGIT管理で、実際の作業用は除外）
+# agents設定等のファイルを取り出して共有する際はtemp_samplesフォルダを利用する
 .github/agents
+
+# メモ
+memo*.md
 
 # 便利スクリプト（WIP）
 scripts/
-config.yaml
 
 # 一時出力ディレクトリ
 temp/
-
-# テスト用一時ディレクトリ
-temp_test/
